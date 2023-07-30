@@ -43,6 +43,7 @@ class ProfileOnePage extends StatelessWidget {
                   children: <Widget>[
                     CircleAvatar(
                       minRadius: 30.0,
+
                       backgroundColor: Colors.red.shade600,
                       child: const Icon(
                         Icons.call,
@@ -54,6 +55,7 @@ class ProfileOnePage extends StatelessWidget {
                       backgroundColor: Colors.deepOrange.shade300,
                       child: CircleAvatar(
                         backgroundColor: Colors.red,
+                        backgroundImage: AssetImage('assets/name.png'),
                         minRadius: 50,
                       ),
                     ),
@@ -71,11 +73,11 @@ class ProfileOnePage extends StatelessWidget {
                   height: 10,
                 ),
                 const Text(
-                  "Ram Kumar",
+                  "Muhammad Abdullah",
                   style: TextStyle(fontSize: 22.0, color: Colors.white),
                 ),
                 Text(
-                  "Kathmandu, Nepal",
+                  "Flutter Developer",
                   style: TextStyle(fontSize: 14.0, color: Colors.red.shade700),
                 )
               ],
@@ -131,7 +133,7 @@ class ProfileOnePage extends StatelessWidget {
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
             subtitle: Text(
-              "ram@kumar.com",
+              "abdullahwali79@gmail.com",
               style: TextStyle(fontSize: 18.0),
             ),
           ),
@@ -142,7 +144,7 @@ class ProfileOnePage extends StatelessWidget {
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
             subtitle: Text(
-              "+977 9818225533",
+              "+92 3046983794",
               style: TextStyle(fontSize: 18.0),
             ),
           ),
@@ -153,7 +155,7 @@ class ProfileOnePage extends StatelessWidget {
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
             subtitle: Text(
-              "@ramkumar",
+              "@abdullahwali79",
               style: TextStyle(fontSize: 18.0),
             ),
           ),
@@ -164,7 +166,7 @@ class ProfileOnePage extends StatelessWidget {
               style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
             ),
             subtitle: Text(
-              "facebook.com/ramkumar",
+              "facebook.com/abdullahwali79",
               style: TextStyle(fontSize: 18.0),
             ),
           ),
