@@ -16,7 +16,7 @@ class MyAPP extends StatelessWidget {
 }
 
 class ProfileOnePage extends StatelessWidget {
-  static const String path = "lib/src/pages/profile/profile1.dart";
+  //static const String path = "lib/src/pages/profile/profile1.dart";
 
   const ProfileOnePage({super.key});
 
@@ -32,7 +32,7 @@ class ProfileOnePage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           Container(
-            height: 200,
+            height: 300,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.centerLeft,
@@ -105,6 +105,11 @@ class ProfileOnePage extends StatelessWidget {
                 child: Container(
                   color: Colors.deepOrange.shade300,
                   child: const ListTile(
+                    subtitle: Text(
+                      "FOLLOWERS",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.red),
+                    ),
                     title: Text(
                       "50895",
                       textAlign: TextAlign.center,
@@ -113,11 +118,7 @@ class ProfileOnePage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: 24.0),
                     ),
-                    subtitle: Text(
-                      "FOLLOWERS",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.red),
-                    ),
+
                   ),
                 ),
               ),
