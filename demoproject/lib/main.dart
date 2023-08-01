@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-void main(){
+
+void main() {
   runApp(MyAPP());
 }
+
 class MyAPP extends StatelessWidget {
   const MyAPP({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: ProfileOnePage(),);
+    return MaterialApp(
+      home: ProfileOnePage(),
+    );
   }
 }
 
@@ -15,6 +19,7 @@ class ProfileOnePage extends StatelessWidget {
   static const String path = "lib/src/pages/profile/profile1.dart";
 
   const ProfileOnePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,15 +47,6 @@ class ProfileOnePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     CircleAvatar(
-                      minRadius: 30.0,
-
-                      backgroundColor: Colors.red.shade600,
-                      child: const Icon(
-                        Icons.call,
-                        size: 30.0,
-                      ),
-                    ),
-                    CircleAvatar(
                       minRadius: 60,
                       backgroundColor: Colors.deepOrange.shade300,
                       child: CircleAvatar(
@@ -59,9 +55,37 @@ class ProfileOnePage extends StatelessWidget {
                         minRadius: 50,
                       ),
                     ),
+                    Column(
+                      children: [
+                        Text(
+                          "Muhammad Abdullah",
+                          style: TextStyle(fontSize: 22.0, color: Colors.white),
+                        ),
+                        Text(
+                          "Flutter Developer",
+                          style: TextStyle(
+                              fontSize: 14.0, color: Colors.white),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
                     CircleAvatar(
                       minRadius: 30.0,
-                      backgroundColor: Colors.red.shade600,
+                      backgroundColor: Colors.black,
+                      child: const Icon(
+                        Icons.call,
+                        size: 30.0,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    CircleAvatar(
+                      minRadius: 30.0,
+                      backgroundColor: Colors.black,
                       child: const Icon(
                         Icons.message,
                         size: 30.0,
@@ -69,17 +93,9 @@ class ProfileOnePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  "Muhammad Abdullah",
-                  style: TextStyle(fontSize: 22.0, color: Colors.white),
-                ),
-                Text(
-                  "Flutter Developer",
-                  style: TextStyle(fontSize: 14.0, color: Colors.red.shade700),
-                )
               ],
             ),
           ),
