@@ -5,6 +5,7 @@ import 'quiz_brain.dart';
 
 QuizBrain quizBrain = QuizBrain();
 
+
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -81,9 +82,9 @@ class _QuizPageState extends State<QuizPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
+      children: [
         Expanded(
-          flex: 5,
+          flex: 6,
           child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
@@ -94,8 +95,7 @@ class _QuizPageState extends State<QuizPage> {
                   fontSize: 25.0,
                   color: Colors.white,
                 ),
-              )
-
+              ),
             ),
           ),
         ),
