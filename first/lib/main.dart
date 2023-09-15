@@ -1,7 +1,8 @@
+import 'package:first/profile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(home: Profile()));
 }
 
 class MyApp extends StatelessWidget {
