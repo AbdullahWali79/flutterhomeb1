@@ -26,10 +26,18 @@ class WeatherPage extends StatefulWidget {
 
 class _WeatherPageState extends State<WeatherPage> {
   final apiKey = '158967843a4e4cf212969a5b6480d58c';
-  String city = '';
+  String city = 'Vehari'; // Set initial value to match a predefined city
   String temperature = '';
+  final cityController = TextEditingController();
+  final List<String> predefinedCities = ['Vehari', 'Multan', 'Lahore', 'Karachi'];
 
-  Future<void> _fetchWeatherData() async {
+  @override
+  void initState() {
+    super.initState();
+    _fetchWeatherData(city);
+  }
+
+  Future<void> _fetchWeatherData(String city) async {
     final url =
     Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric');
 
@@ -46,45 +54,71 @@ class _WeatherPageState extends State<WeatherPage> {
     }
   }
 
+  void _updateWeather() {
+    setState(() {
+      city = cityController.text;
+    });
+    _fetchWeatherData(city);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Weather App'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              onChanged: (value) {
-                setState(() {
-                  city = value;
-                });
-              },
-              decoration: InputDecoration(
-                labelText: 'Enter City',
-              ),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                _fetchWeatherData();
-              },
-              child: Text('Get Weather'),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Temperature:',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 16),
-            Text(
-              temperature,
-              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue, Colors.deepPurple],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              DropdownButton<String>(
+                value: city,
+                onChanged: (newValue) {
+                  setState(() {
+                    city = newValue!;
+                  });
+                },
+                items: predefinedCities.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 16),
+              FloatingActionButton(
+                onPressed: _updateWeather,
+                tooltip: 'Get Weather',
+                child: Icon(Icons.cloud),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Temperature:',
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(height: 16),
+              Text(
+                temperature,
+                style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          cityController.clear();
+        },
+        tooltip: 'Add City',
+        child: Icon(Icons.add),
       ),
     );
   }
