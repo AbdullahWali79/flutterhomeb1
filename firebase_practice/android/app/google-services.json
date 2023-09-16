@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "994071718860",
+    "project_id": "flutterpractice-b2b1d",
+    "storage_bucket": "flutterpractice-b2b1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994071718860:android:522b60c06be73740e58b69",
+        "android_client_info": {
+          "package_name": "com.example.firebase_practice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWvHT25HbaMsnqMeV2a2slGLUzwkOYMdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
