@@ -1,6 +1,10 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -52,11 +56,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
+      DatabaseReference databaseReference =
+      FirebaseDatabase.instance.reference().child('your_data_key');
+
+      // Replace 'your_data_key' with the specific location in your database where you want to add the data.
+
+      databaseReference.push().set({
+        'name': 'Abdullah',
+        // Add any other data you want to store
+      }).then((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Data added to Firebase!'),
+          ),
+        );
+      }).catchError((error) {
+        print('Error: $error');
+      });
       _counter++;
     });
   }
