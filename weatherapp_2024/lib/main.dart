@@ -89,7 +89,7 @@ class _WeatherPageState extends State<WeatherPage> {
                 items: predefinedCities.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value),
+                    child: Text(value,style: TextStyle(color: Colors.white,),),
                   );
                 }).toList(),
               ),
@@ -102,12 +102,12 @@ class _WeatherPageState extends State<WeatherPage> {
               SizedBox(height: 16),
               Text(
                 'Temperature:',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 40,color: Colors.white,),
               ),
               SizedBox(height: 16),
               Text(
                 temperature,
-                style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold,color: Colors.white,),
               ),
             ],
           ),

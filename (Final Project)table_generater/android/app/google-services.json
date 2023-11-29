@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "467383881476",
+    "firebase_url": "https://memoapp-8fe89-default-rtdb.firebaseio.com",
+    "project_id": "memoapp-8fe89",
+    "storage_bucket": "memoapp-8fe89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467383881476:android:b0dc302ad8157b3aa08a51",
+        "android_client_info": {
+          "package_name": "com.example.alumni_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467383881476-h59n5silbv2u2jbpc2l1suaud0nt8o7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr48NOwZiyGlv6cSGpQoQwaAxlH6HW7YE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467383881476-h59n5silbv2u2jbpc2l1suaud0nt8o7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467383881476:android:b586bcc6c0e0b73fa08a51",
+        "android_client_info": {
+          "package_name": "com.example.memoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467383881476-h59n5silbv2u2jbpc2l1suaud0nt8o7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr48NOwZiyGlv6cSGpQoQwaAxlH6HW7YE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467383881476-h59n5silbv2u2jbpc2l1suaud0nt8o7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467383881476:android:bec31e963e8a4717a08a51",
+        "android_client_info": {
+          "package_name": "com.example.table_generater"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467383881476-h59n5silbv2u2jbpc2l1suaud0nt8o7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr48NOwZiyGlv6cSGpQoQwaAxlH6HW7YE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467383881476-h59n5silbv2u2jbpc2l1suaud0nt8o7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
