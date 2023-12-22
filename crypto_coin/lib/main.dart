@@ -11,14 +11,24 @@ class Coin {
   final String name;
   final String symbol;
   final double price;
+  final double high;
+  final double low;
 
-  Coin({required this.name, required this.symbol, required this.price});
+  Coin({
+    required this.name,
+    required this.symbol,
+    required this.price,
+    required this.high,
+    required this.low,
+  });
 
   factory Coin.fromJson(Map<String, dynamic> json) {
     return Coin(
       name: json['name'],
       symbol: json['symbol'],
-      price: json['quote']['USD']['price'],
+      price: json['quote']['USD']['price'] != null ? json['quote']['USD']['price'].toDouble() : 0.0,
+      high: json['quote']['USD']['high_24h'] != null ? json['quote']['USD']['high_24h'].toDouble() : 0.0,
+      low: json['quote']['USD']['low_24h'] != null ? json['quote']['USD']['low_24h'].toDouble() : 0.0,
     );
   }
 }
@@ -121,9 +131,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   return ListTile(
                     title: Text(displayedCoins[index].name),
                     subtitle: Text(displayedCoins[index].symbol),
-                    trailing: Text(
-                      '\$${displayedCoins[index].price.toStringAsFixed(8)}', // Displaying full decimal value
-                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CoinDetailsScreen(
+                            coin: displayedCoins[index],
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               );
@@ -190,6 +207,71 @@ class _CoinSearch extends SearchDelegate<String> {
           },
         );
       },
+    );
+  }
+}
+
+class CoinDetailsScreen extends StatelessWidget {
+  final Coin coin;
+
+  CoinDetailsScreen({required this.coin});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Details - ${coin.name}'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Current Price: \$${coin.price.toStringAsFixed(8)}',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Table(
+              border: TableBorder.all(),
+              children: [
+                TableRow(
+                  children: [
+                    TableCell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Today\'s High'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('\$${coin.high.toStringAsFixed(8)}'),
+                      ),
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableCell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Today\'s Low'),
+                      ),
+                    ),
+                    TableCell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('\$${coin.low.toStringAsFixed(8)}'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
