@@ -1,168 +1,135 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:easy_search_bar/easy_search_bar.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class Coin {
-  final String id;
-  final String name;
-  final String symbol;
-  final double price;
-  final double highDay;
-  final double lowDay;
-
-  Coin({
-    required this.id,
-    required this.name,
-    required this.symbol,
-    required this.price,
-    required this.highDay,
-    required this.lowDay,
-  });
-
-  factory Coin.fromJson(Map<String, dynamic> json) {
-    return Coin(
-      id: json['asset_id'],
-      name: json['name'],
-      symbol: json['asset_id'],
-      price: json['price_usd'] ?? 0.0,
-      highDay: json['high_day'] ?? 0.0,
-      lowDay: json['low_day'] ?? 0.0,
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Crypto App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: CryptoListScreen(),
     );
   }
 }
 
-class CoinApiService {
-  static const String apiKey = 'BFF86FC4-456E-4505-ACB1-E3B10CE21E8E';
-  static const String baseUrl = 'https://rest.coinapi.io/v1/assets';
+class Crypto {
+  final String id;
+  final String name;
+  final String symbol;
+  final double priceUsd;
 
-  Future<List<Coin>> fetchCoinData() async {
-    final response = await http.get(
-      Uri.parse(baseUrl),
-      headers: {'X-CoinAPI-Key': apiKey},
+  Crypto({
+    required this.id,
+    required this.name,
+    required this.symbol,
+    required this.priceUsd,
+  });
+
+  factory Crypto.fromJson(Map<String, dynamic> json) {
+    return Crypto(
+      id: json['id'],
+      name: json['name'],
+      symbol: json['symbol'],
+      priceUsd: double.parse(json['priceUsd']),
     );
+  }
+}
+
+class CoincapService {
+  final String baseUrl = 'https://api.coincap.io/v2';
+
+  Future<List<Crypto>> getCryptoData() async {
+    String apiUrl = '$baseUrl/assets?limit=50'; // Fetching 50 cryptocurrencies
+    http.Response response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      return data.map((json) => Coin.fromJson(json)).toList();
+      Map<String, dynamic> data = json.decode(response.body);
+      List<dynamic> cryptoList = data['data'];
+
+      return cryptoList.map((json) => Crypto.fromJson(json)).toList();
     } else {
-      throw Exception('Failed to fetch data');
+      throw Exception('Failed to load cryptocurrency data');
     }
   }
 }
 
-class MyApp extends StatelessWidget {
-  final CoinApiService coinApiService = CoinApiService();
-
+class CryptoListScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'CoinAPI Crypto Prices',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: CoinListPage(coinApiService: coinApiService),
-    );
-  }
+  _CryptoListScreenState createState() => _CryptoListScreenState();
 }
 
-class CoinListPage extends StatefulWidget {
-  final CoinApiService coinApiService;
-
-  CoinListPage({Key? key, required this.coinApiService}) : super(key: key);
-
-  @override
-  _CoinListPageState createState() => _CoinListPageState();
-}
-
-class _CoinListPageState extends State<CoinListPage> {
-  late Future<List<Coin>> futureCoins;
+class _CryptoListScreenState extends State<CryptoListScreen> {
+  late CoincapService _coincapService;
+  late List<Crypto> _cryptoList;
+  late TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
-    futureCoins = widget.coinApiService.fetchCoinData();
+    _coincapService = CoincapService();
+    _cryptoList = [];
+    _controller = TextEditingController();
+
+    _loadCryptoData();
+  }
+
+  void _loadCryptoData() async {
+    try {
+      List<Crypto> data = await _coincapService.getCryptoData();
+      setState(() {
+        _cryptoList = data;
+      });
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+  List<Crypto> _searchCrypto(String searchQuery) {
+    return _cryptoList.where((crypto) {
+      return crypto.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
+          crypto.symbol.toLowerCase().contains(searchQuery.toLowerCase());
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CoinAPI Crypto Prices'),
+        title: Text('Cryptocurrency List'),
       ),
-      body: Center(
-        child: FutureBuilder<List<Coin>>(
-          future: futureCoins,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<Coin>? coins = snapshot.data;
-              return ListView.builder(
-                itemCount: coins!.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(coins[index].name),
-                    subtitle: Text(
-                      'Price: \$${coins[index].price.toStringAsFixed(8)}\nHigh: \$${coins[index].highDay.toStringAsFixed(8)}\nLow: \$${coins[index].lowDay.toStringAsFixed(8)}',
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CoinDetailPage(coin: coins[index]),
-                        ),
-                      );
-                    },
-                  );
-                },
-              );
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            return CircularProgressIndicator();
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class CoinDetailPage extends StatelessWidget {
-  final Coin coin;
-
-  CoinDetailPage({required this.coin});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Coin Details - ${coin.name}'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'ID: ${coin.id}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: EasySearchBar(
+              controller: _controller,
+              hintText: 'Search...',
+              onTextChanged: (text) {
+                setState(() {});
+              }, title: Text("Just Test"), onSearch: (String ) {  },
             ),
-            SizedBox(height: 20),
-            Text('Name: ${coin.name}'),
-            SizedBox(height: 10),
-            Text('Symbol: ${coin.symbol}'),
-            SizedBox(height: 10),
-            Text('Price: \$${coin.price.toStringAsFixed(8)}'),
-            SizedBox(height: 10),
-            Text('High of the Day: \$${coin.highDay.toStringAsFixed(8)}'),
-            SizedBox(height: 10),
-            Text('Low of the Day: \$${coin.lowDay.toStringAsFixed(8)}'),
-          ],
-        ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _searchCrypto(_controller.text).length,
+              itemBuilder: (BuildContext context, int index) {
+                Crypto crypto = _searchCrypto(_controller.text)[index];
+                return ListTile(
+                  title: Text(crypto.name),
+                  subtitle: Text('${crypto.symbol} - \$${crypto.priceUsd.toStringAsFixed(2)}'),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
