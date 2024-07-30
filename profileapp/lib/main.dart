@@ -8,6 +8,7 @@ void main() {
 class SectionA extends StatelessWidget {
   const SectionA({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,9 +24,15 @@ class SectionA extends StatelessWidget {
             backgroundColor: Colors.greenAccent,
           ),
           body: Column(
+            // Greate
             //mainAxisAlignment: MainAxisAlignment,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+
+
+              SizedBox(
+                height: 20,
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(100, 20, 100, 0),
                 child: Container(
